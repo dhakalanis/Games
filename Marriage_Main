@@ -31,6 +31,8 @@ def rules():
         click_b_B()
         rules()
 
+# Start:You can skip this part. It was for testing purpose only.
+'''
 def input_names_maal_status_temp():
     name = raw_input("Enter players name separated by commas:")
     name_list_temp = map(str,name.split(','))
@@ -160,7 +162,8 @@ def input_names_maal_status_temp_1():
         del name_list_temp[:]
         input_names_maal_status()
 
-
+'''
+# END:You can skip the above part. It was for testing purpose only.
 def input_names_maal_status():
     flower()
     print "Section:Requesting input"
