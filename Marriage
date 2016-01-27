@@ -1,0 +1,300 @@
+def start():
+    flower()
+    print "Section:Home Page"
+    flower()
+    print '''Welcome to one of the most popular Nepalese cards game "Marriage"\nPlease enter one of the below choices:
+    \t1)Rules
+    \t2)Enter player Information (names,maal,game status)'''
+    start_choice = raw_input("> ")
+    if start_choice == "1":
+      rules()
+    elif start_choice == "2":
+        input_names_maal_status()
+    else:
+        print "Learn to use the keyboard. Enter only from the available options:"
+        start()
+
+def rules():
+    flower()
+    print "Section:Rules"
+    flower()
+    print '''There are only 4 status of a player.
+    \t Seen     =   0 --- > Players with status 0 only pays 3 points to the winner. His/her maal is counted.
+    \t Not_Seen =   1 --- > Players with status 1 pays 10 points to the winner. His/her maal is counted.
+    \t Less     =   2 --- > Players with status 2 does not have to pay any points. His/her maal is counted.
+    \t Winner   =   3 --- > Players with status 3 is the ultimate "WINNER". His/her maal is counted (Of course!!!).'''
+    request_b_B()
+    rules_choice = raw_input("> ")
+    if rules_choice == "b" or rules_choice == "B":
+        start()
+    else:
+        click_b_B()
+        rules()
+
+def input_names_maal_status_temp():
+    name = raw_input("Enter players name separated by commas:")
+    name_list_temp = map(str,name.split(','))
+    name_list = []
+    if all(items.isalpha()== True for items in name_list_temp) and len(name_list_temp) == 5:
+        print "Name list:%s" %name_list_temp
+        name_list = name_list_temp[:]
+        print "2:", name_list
+        maal_list = []
+        status_list = []
+        for x in range(0,5):
+                def input_maal():
+                    name_list = name_list_temp[:]
+                    print "3:", name_list
+                    maal = raw_input("Enter %s's maal:" %name_list[x])
+                    if maal.isdigit() == True:
+                        maal_list.append(int(maal))
+                    else:
+                        print "Invalid input: Only digits are allowed."
+                        input_maal()
+
+                input_maal()
+
+                def input_status():
+                    status = raw_input("Enter %s's game code status:" %name_list[x])
+                    if status == '0' or status == '1' or  status == '2' or  status == '3':
+                        status_list.append(int(status))
+                    else:
+                        print "Invalid input: Status should be one of these only - 0,1,2,3"
+                        input_status()
+                input_status()
+
+        dict_players_name = {
+            'Player1': name_list[0],
+            'Player2': name_list[1],
+            'Player3': name_list[2],
+            'Player4': name_list[3],
+            'Player5': name_list[4],
+        }
+
+        dict_name_status = {
+            name_list[x]: status_list[x] for x in range(0,5)
+        }
+
+        dict_name_maal = {
+            name_list[x]:maal_list[x] for x in range (0,5)
+        }
+
+        for x in dict_players_name.items():
+            print "%s's Info: \n\tGame Status:\t%r\n\tMaal:\t\t\t%r" %(dict_players_name[x], dict_name_status[dict_players_name[x]],dict_name_maal[dict_players_name[x]] )
+
+    elif all(items.isalpha()== False for items in name_list_temp) or len(name_list_temp) != 5:
+        print "Invalid input. There should be exact 5 players in alphabets only. For ex: Anis,Obama,Tom,Jerry,Jim"
+        del name_list_temp[:]
+        input_names_maal_status()
+    else:
+        print "Invalid input. There should be exact 5 players in alphabets only. For ex: Anis,Obama,Tom,Jerry,Jim"
+        del name_list_temp[:]
+        input_names_maal_status()
+
+
+def input_names_maal_status_temp_1():
+    name = raw_input("Enter players name separated by commas:")
+    name_list_temp = map(str,name.split(','))
+    name_list = []
+    if all(items.isalpha()== True for items in name_list_temp) and len(name_list_temp) == 5:
+        print "Name list:%s" %name_list_temp
+        name_list = name_list_temp[:]
+        maal_list = []
+        status_list = []
+        def input_maal_status():
+            for x in range(0,5):
+                def input_maal():
+                    name_list = name_list_temp[:]
+                    maal = raw_input("Enter %s's maal:" %name_list[x])
+                    if maal.isdigit() == True:
+                        maal_list.append(int(maal))
+                    else:
+                        print "Invalid input: Only digits are allowed."
+                        input_maal()
+                input_maal()
+                def input_status():
+                    status = raw_input("Enter %s's game code status:" %name_list[x])
+                    if status == '0' or status == '1' or  status == '2' or  status == '3':
+                        status_list.append(int(status))
+                        if len(status_list) == 5 and status_list.count(3) != 1:
+                            print "Only 1 winners allowed. Let's get the maal and status code again for each players."
+                            print "Players name sequence:", name_list
+                            print "Previous Maal sequence as of name:" , maal_list
+                            print "Previous Status sequence as of name:" , status_list
+                            del status_list[:]
+                            del maal_list[:]
+                            input_maal_status()
+                        elif len(status_list)== 5 and status_list.count(3) ==1:
+                            return
+                    else:
+                        print "Invalid input: Status should be one of these only - 0,1,2,3"
+                        input_status()
+                input_status()
+            dict_players_name = {
+                            'Player1': name_list[0],
+                            'Player2': name_list[1],
+                            'Player3': name_list[2],
+                            'Player4': name_list[3],
+                            'Player5': name_list[4],
+                        }
+            dict_name_status = {
+                            name_list[x]: status_list[x] for x in range(0,5)
+                        }
+            dict_name_maal = {
+                            name_list[x]:maal_list[x] for x in range (0,5)
+                        }
+
+            for a,b in dict_name_status.items():
+                if b == 3:
+                    print "Congratulations %s!!!" %a
+                    print "Now let's get the calculation for all the players!!"
+            for x in dict_players_name:
+                print "%s's Info: \n\tGame Status:\t%r\n\tMaal:\t\t\t%r" %(dict_players_name[x], dict_name_status[dict_players_name[x]],dict_name_maal[dict_players_name[x]] )
+        input_maal_status()
+    elif all(items.isalpha()== False for items in name_list_temp) or len(name_list_temp) != 5:
+        print "Invalid input. There should be exact 5 players in alphabets only. For ex: Anis,Obama,Tom,Jerry,Jim"
+        del name_list_temp[:]
+        input_names_maal_status()
+    else:
+        print "Invalid input. There should be exact 5 players in alphabets only. For ex: Anis,Obama,Tom,Jerry,Jim"
+        del name_list_temp[:]
+        input_names_maal_status()
+
+
+def input_names_maal_status():
+    flower()
+    print "Section:Requesting input"
+    flower()
+    name = raw_input("Enter players name separated by commas:")
+    name_list_temp = map(str,name.split(','))
+    name_list = []
+    if all(items.isalpha()== True for items in name_list_temp) and len(name_list_temp) == 5:
+        print "Name list:%s" %name_list_temp
+        name_list = name_list_temp[:]
+        maal_list = []
+        status_list = []
+        def input_maal():
+            for x in range(0,5):
+                def input_maal_1():
+                    name_list = name_list_temp[:]
+                    maal = raw_input("Enter %s's maal:" %name_list[x])
+                    if maal.isdigit() == True:
+                        maal_list.append(int(maal))
+                    else:
+                        print "Invalid input: Only digits are allowed."
+                        input_maal_1()
+                input_maal_1()
+        input_maal()
+        #for x in range(0,5):
+        def input_status():
+                    for x in range(0,5):
+                        def input_status_1():
+                            status = raw_input("Enter %s's game code status:" %name_list[x])
+                            if status == '0' or status == '1' or  status == '2' or  status == '3':
+                                status_list.append(int(status))
+                                if len(status_list) == 5 and status_list.count(3) != 1:
+                                    print "Only 1 winners allowed. Let's get the status again for each players."
+                                    print "Your previous entry are below for your reference:"
+                                    print "\tPlayers name sequence:", name_list
+                                    print "\tPrevious Game Code Status sequence as of name:" , status_list
+                                    del status_list[:]
+                                    #del maal_list[:]
+                                    input_status()
+                                elif len(status_list)== 5 and status_list.count(3) ==1:
+                                    return
+                            else:
+                                print "Invalid input: Status should be one of these only - 0,1,2,3"
+                                input_status_1()
+                        input_status_1()
+        input_status()
+        def display_info():
+            flower()
+            print "Section:Display Players' Information"
+            flower()
+            total_maal = sum(maal_list)
+            dict_players_name = {
+                            'Player1': name_list[0],
+                            'Player2': name_list[1],
+                            'Player3': name_list[2],
+                            'Player4': name_list[3],
+                            'Player5': name_list[4],
+                        }
+            dict_name_status = {
+                            name_list[x]: status_list[x] for x in range(0,5)
+                        }
+            dict_name_maal = {
+                            name_list[x]:maal_list[x] for x in range (0,5)
+                        }
+            dict_calc = {
+
+            }
+
+            flower()
+            print "\tTotal maal accumulated:", total_maal
+
+            for a,b in dict_name_status.items():
+                    if b == 0:
+                        dict_calc[a] = (dict_name_maal[a]* 5) - (total_maal + 3)
+                        #print dict_calc
+                    elif b == 1:
+                        dict_calc[a] = (dict_name_maal[a]* 5) - (total_maal + 10)
+                    elif b == 2:
+                        dict_calc[a] = (dict_name_maal[a]* 5) - (total_maal)
+            for a,b in dict_name_status.items():
+                if b == 3:
+                    dict_calc[a] = sum(dict_calc.values()) * -1
+                    print "\tCongratulation %s!!!" %a.upper()
+                    flower()
+                    print "Let's get the calculation for all the players!!"
+
+            for x,y in dict_players_name.items():
+                print "%s's Info: \n\tGame Status:\t%r\n\tMaal:\t\t\t%r\n\tPoints earned:\t%r" %(dict_players_name[x], dict_name_status[dict_players_name[x]],dict_name_maal[dict_players_name[x]],dict_calc[dict_players_name[x]] )
+
+            def display_option_menu():
+                flower()
+                print "Please enter appropriate options below:\n\t1)Display Player Info again.\n\t2)Re-enter Players information \n\t3)Go to Home Page"
+                display_option = raw_input("> ")
+                if display_option == "1":
+                    display_info()
+                elif display_option =="2":
+                    def re_enter_info():
+                        print "Re-entering the information will erase the current players info. Are you sure you want to re-enter Players name ?\nPress 'y' to continue or 'n' to go back."
+                        display_option_menu_confirmation = raw_input("> ")
+                        if display_option_menu_confirmation == "y" or display_option_menu_confirmation =="Y":
+                            input_names_maal_status()
+                        if display_option_menu_confirmation == "n" or display_option_menu_confirmation == "N":
+                            display_option_menu()
+                        else:
+                            print "Only 'y' 'Y' 'n' or 'N' are allowed"
+                            re_enter_info()
+                    re_enter_info()
+                elif display_option == "3":
+                    start()
+                else:
+                    print"Learn to use the keyboard"
+                    display_option_menu()
+            #display_option_menu()
+            display_option_menu()
+        display_info()
+    elif all(items.isalpha()== False for items in name_list_temp) or len(name_list_temp) != 5:
+        print "Invalid input:There should be exact 5 players in alphabets only. For ex: Anis,Obama,Tom,Jerry,Jim"
+        del name_list_temp[:]
+        input_names_maal_status()
+    else:
+        print "Invalid input:There should be exact 5 players in alphabets only. For ex: Anis,Obama,Tom,Jerry,Jim"
+        del name_list_temp[:]
+        input_names_maal_status()
+
+
+
+def click_b_B():
+    print '''You should have entered either "b" or "B". You are so dumb. How can you play this game??\nLet's give it another shot:'''
+
+def request_b_B():
+    print "Please press 'b' or 'B' to go back."
+
+def flower():
+    print "*" *100
+
+start()
+
